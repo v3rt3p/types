@@ -1,0 +1,22 @@
+{
+  "name": "v3rt3p-types",
+  "version": "1.0.0",
+  "description": "Types for various v3rt3p services",
+  "scripts": {},
+  "keywords": [],
+  "author": "radioegor146",
+  "license": "ISC",
+  "packageManager": "pnpm@10.23.0",
+  "devDependencies": {
+    "@bksp/style-guide": "^1.5.0",
+    "eslint": "^9.39.4",
+    "typescript": "^6.0.3"
+  },
+  "exports": {
+    "./processor": "./src/processor.ts",
+    "./directives": "./src/directives.ts"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}
