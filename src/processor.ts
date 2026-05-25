@@ -54,3 +54,10 @@ export const processorWebSocketMessage = z.union([
 ])
 
 export type ProcessorWebSocketMessage = z.infer<typeof processorWebSocketMessage>
+
+export const PROCESSOR_METADATA_SERVER_TYPE_KEY = 'serverType'
+
+export enum ProcessorMetadataServerType {
+  MARUSYA = 'marusya',
+  QUASAR = 'quasar'
+}
