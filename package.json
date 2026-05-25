@@ -14,7 +14,8 @@
   },
   "exports": {
     "./processor": "./src/processor.ts",
-    "./directives": "./src/directives.ts"
+    "./directives": "./src/directives.ts",
+    "./function-state-server": "./src/function-state-server.ts"
   },
   "dependencies": {
     "zod": "^4.4.3"
