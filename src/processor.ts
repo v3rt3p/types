@@ -1,9 +1,12 @@
 import z from 'zod'
 
-import { directive } from './directives'
-
 export const processorPrepareWebSocketMessage = z.object({
-  data: z.object({}),
+  data: z.object({
+    directiveFunctions: z.record(z.string(), z.object({
+      argumentsSchema: z.unknown(), // json schema yadayada
+      description: z.string()
+    }))
+  }),
   type: z.literal('prepare')
 })
 
@@ -22,7 +25,10 @@ export type ProcessorProcessWebSocketMessage = z.infer<typeof processorProcessWe
 
 export const processorPartialResponseWebSocketMessage = z.object({
   data: z.intersection(z.object({
-    directives: z.array(directive),
+    directives: z.array(z.object({
+      arguments: z.unknown(),
+      name: z.string()
+    })),
     text: z.string()
   }), z.union([z.object({
     finished: z.literal(false)
