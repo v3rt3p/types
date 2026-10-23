@@ -1,11 +1,19 @@
 import z from 'zod'
 
+export const processorDirectiveInfo = z.object({
+  arguments: z.unknown(), // json schema yadayada
+  description: z.unknown()
+})
+
+export type ProcessorDirectiveInfo = z.infer<typeof processorDirectiveInfo>
+
+export const processorDirectiveFunctions = z.record(z.string(), processorDirectiveInfo)
+
+export type ProcessorDirectiveFunctions = z.infer<typeof processorDirectiveFunctions>
+
 export const processorPrepareWebSocketMessage = z.object({
   data: z.object({
-    directiveFunctions: z.record(z.string(), z.object({
-      argumentsSchema: z.unknown(), // json schema yadayada
-      description: z.string()
-    }))
+    directiveFunctions: processorDirectiveFunctions
   }),
   type: z.literal('prepare')
 })
