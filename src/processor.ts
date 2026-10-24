@@ -11,14 +11,9 @@ export const processorDirectiveFunctions = z.record(z.string(), processorDirecti
 
 export type ProcessorDirectiveFunctions = z.infer<typeof processorDirectiveFunctions>
 
-export const processorPrepareState = z.record(z.string(), z.unknown())
-
-export type ProcessorPrepareState = z.infer<typeof processorPrepareState>
-
 export const processorPrepareWebSocketMessage = z.object({
   data: z.object({
-    directiveFunctions: processorDirectiveFunctions,
-    state: processorPrepareState
+    directiveFunctions: processorDirectiveFunctions
   }),
   type: z.literal('prepare')
 })
