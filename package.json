@@ -14,7 +14,7 @@
   },
   "exports": {
     "./processor": "./src/processor.ts",
-    "./directives": "./src/directives.ts",
+    "./music": "./src/music.ts",
     "./function-state-server": "./src/function-state-server.ts"
   },
   "dependencies": {
