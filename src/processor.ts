@@ -2,7 +2,7 @@ import z from 'zod'
 
 export const processorDirectiveInfo = z.object({
   arguments: z.unknown(), // json schema yadayada
-  description: z.unknown()
+  description: z.string()
 })
 
 export type ProcessorDirectiveInfo = z.infer<typeof processorDirectiveInfo>
