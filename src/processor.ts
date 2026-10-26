@@ -20,10 +20,13 @@ export const processorPrepareWebSocketMessage = z.object({
 
 export type ProcessorPrepareWebSocketMessage = z.infer<typeof processorPrepareWebSocketMessage>
 
-export const processorProcessMetadata = z.record(z.string(), z.object({
-  description: z.string(),
-  value: z.any()
-}))
+export const processorProcessMetadata = z.object({
+  internal: z.record(z.string(), z.any()),
+  readyToUse: z.record(z.string(), z.object({
+    description: z.string(),
+    value: z.any()
+  }))
+})
 
 export type ProcessorProcessMetadata = z.infer<typeof processorProcessMetadata>
 
