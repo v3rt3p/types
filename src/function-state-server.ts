@@ -1,77 +1,55 @@
 import z from 'zod'
 
-export const functionArgument = z.object({
-  constraints: z.discriminatedUnion('type', [
-    z.object({
-      argumentType: z.literal('number'),
-      max: z.number(),
-      min: z.number(),
-      type: z.literal('number-min-max')
-    }),
-    z.object({
-      argumentType: z.literal('number'),
-      type: z.literal('number-variants'),
-      variants: z.array(z.object({
-        description: z.string(),
-        value: z.number()
-      }))
-    }),
-    z.object({
-      argumentType: z.literal('string'),
-      type: z.literal('string-not-empty')
-    }),
-    z.object({
-      argumentType: z.literal('string'),
-      type: z.literal('string-variants'),
-      variants: z.array(z.object({
-        description: z.string(),
-        value: z.string()
-      }))
-    })
-  ]),
-  description: z.string()
-})
-
-export type FunctionArgument = z.infer<typeof functionArgument>
-
 export const functionInfo = z.object({
-  arguments: z.record(z.string(), functionArgument),
-  description: z.string()
+  arguments: z.any().describe('Arguments JSON schema'), // yadayada JSON schema
+  description: z.string().describe('Human-readable description'),
+  hasResponse: z.boolean().describe('Does function has any response?')
 })
 
 export type FunctionInfo = z.infer<typeof functionInfo>
 
-export const functions = z.record(z.string(), functionInfo)
+export const functions = z.record(z.string(), functionInfo).describe('Available functions')
 
 export type Functions = z.infer<typeof functions>
 
+// function server
+
+export const functionStateServerGetDependantFunctionsRequest = z.object({
+  metadata: z.object().describe('Internal metadata for use'),
+  sessionId: z.string().describe('Unique processor session ID')
+})
+
+export type FunctionStateServerGetDependantFunctionsRequest =
+  z.infer<typeof functionStateServerGetDependantFunctionsRequest>
+
 export const functionStateServerCallFunctionRequest = z.object({
-  arguments: z.record(z.string(), z.union([z.string(), z.number()])),
-  metadata: z.object(),
-  name: z.string(),
-  sessionId: z.string()
+  arguments: z.any().describe('Call arguments'),
+  metadata: z.object().describe('Internal metadata for use'),
+  name: z.string().describe('Function name'),
+  sessionId: z.string().describe('Unique processor session ID')
 })
 
 export type FunctionStateServerCallFunctionRequest = z.infer<typeof functionStateServerCallFunctionRequest>
 
-export const functionStateServerGetIndependentStateRequest = z.object({
-  sessionId: z.string()
+export const functionStateServerCallFunctionResponse = z.object({
+  response: z.any().optional().describe('Response data (if function has response)')
 })
 
-export type FunctionStateServerGetIndependentStateRequest =
-  z.infer<typeof functionStateServerGetIndependentStateRequest>
+export type FunctionStateServerCallFunctionResponse = z.infer<typeof functionStateServerCallFunctionResponse>
 
-export const functionStateServerGetStateRequest = z.object({
-  metadata: z.object(),
-  sessionId: z.string()
+// state server
+
+export const functionStateServerGetDependantStateRequest = z.object({
+  metadata: z.object().describe('Internal metadata for use'),
+  sessionId: z.string().describe('Unique processor session ID')
 })
 
-export type FunctionStateServerGetStateRequest =
-  z.infer<typeof functionStateServerGetStateRequest>
+export type FunctionStateServerGetDependantStateRequest =
+  z.infer<typeof functionStateServerGetDependantStateRequest>
 
 export const functionStateServerStateResponse = z.record(z.string(), z.object({
-  description: z.string(),
-  value: z.string()
+  description: z.string().describe('Human-readable description'),
+  value: z.string().describe('Human-readable value')
 }))
 
 export type FunctionStateServerStateResponse = z.infer<typeof functionStateServerStateResponse>
