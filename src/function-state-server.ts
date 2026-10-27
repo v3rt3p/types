@@ -15,7 +15,7 @@ export type Functions = z.infer<typeof functions>
 // function server
 
 export const functionStateServerGetDependantFunctionsRequest = z.object({
-  metadata: z.object().describe('Internal metadata for use'),
+  metadata: z.record(z.string(), z.any()).describe('Internal metadata for use'),
   sessionId: z.string().describe('Unique processor session ID')
 })
 
@@ -24,7 +24,7 @@ export type FunctionStateServerGetDependantFunctionsRequest =
 
 export const functionStateServerCallFunctionRequest = z.object({
   arguments: z.any().describe('Call arguments'),
-  metadata: z.object().describe('Internal metadata for use'),
+  metadata: z.record(z.string(), z.any()).describe('Internal metadata for use'),
   name: z.string().describe('Function name'),
   sessionId: z.string().describe('Unique processor session ID')
 })
@@ -40,7 +40,7 @@ export type FunctionStateServerCallFunctionResponse = z.infer<typeof functionSta
 // state server
 
 export const functionStateServerGetDependantStateRequest = z.object({
-  metadata: z.object().describe('Internal metadata for use'),
+  metadata: z.record(z.string(), z.any()).describe('Internal metadata for use'),
   sessionId: z.string().describe('Unique processor session ID')
 })
 
