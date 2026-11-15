@@ -269,7 +269,8 @@ export type QueueCreateRequestParameters =
 
 export const createQueueRequest = z.object({
   doShuffle: z.boolean().optional().describe('Shuffle item contents after creation?'),
-  itemId: z.string().describe('Item ID to create queue from')
+  itemId: z.string().describe('Item ID to create queue from'),
+  startFromItemId: z.string().optional().describe('What item to start from')
 })
 
 export type QueueCreateRequest =
