@@ -257,3 +257,25 @@ export const musicServiceSearchResponse = z.object({
 
 export type MusicServiceSearchResponse =
   z.infer<typeof musicServiceSearchResponse>
+
+// POST /queue/:queueId/create
+
+export const queueCreateRequestParameters = z.object({
+  queueId: z.string().describe('Queue ID')
+})
+
+export type QueueCreateRequestParameters =
+  z.infer<typeof queueCreateRequestParameters>
+
+export const createQueueRequest = z.object({
+  doShuffle: z.boolean().optional().describe('Shuffle item contents after creation?'),
+  itemId: z.string().describe('Item ID to create queue from')
+})
+
+export type QueueCreateRequest =
+  z.infer<typeof createQueueRequest>
+
+export const createQueueResponse = z.object({})
+
+export type QueueCreateResponse =
+  z.infer<typeof createQueueResponse>
