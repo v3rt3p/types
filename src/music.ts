@@ -12,9 +12,11 @@ export type MusicArtist = z.infer<typeof musicArtist>
 
 export const musicAlbum = z.object({
   artists: z.array(musicArtist).describe('Album artists'),
+  genre: z.string().describe('Album genre'),
   id: z.string().describe('Album ID'),
   imageUrl: z.string().optional().describe('Album image'),
   name: z.string().describe('Album name'),
+  type: z.string().describe('Album type (LP/Single/etc)'),
   year: z.number().int().nonnegative().describe('Album year')
 }).describe('Music album')
 
@@ -49,7 +51,8 @@ export type MusicWave = z.infer<typeof musicWave>
 export const musicPlaylist = z.object({
   id: z.string().describe('Playlist ID'),
   imageUrl: z.string().optional().describe('Playlist image'),
-  name: z.string().describe('Playlist name')
+  name: z.string().describe('Playlist name'),
+  tracksCount: z.number().int().nonnegative().describe('Number of tracks in playlist')
 }).describe('Music playlist')
 
 export type MusicPlaylist = z.infer<typeof musicPlaylist>
