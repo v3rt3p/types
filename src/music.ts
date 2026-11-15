@@ -23,14 +23,19 @@ export const musicTrack = z.object({
   albums: z.array(musicAlbum).describe('Track albums'),
   artists: z.array(musicArtist).describe('Track artists'),
   durationMs: z.number().int().nonnegative().describe('Track duration in milliseconds'),
-  format: z.string().describe('Track format (MP3)'),
   id: z.string().describe('Track ID'),
   imageUrl: z.string().optional().describe('Track image'),
-  title: z.string().describe('Track title'),
-  url: z.url().describe('Direct track URL')
+  title: z.string().describe('Track title')
 }).describe('Music track')
 
 export type MusicTrack = z.infer<typeof musicTrack>
+
+export const musicTrackWithUrl = z.intersection(z.object({
+  format: z.string().default('Track format (MP3'),
+  url: z.url().describe('Direct track URL')
+}), musicTrack)
+
+export type MusicTrackWithUrl = z.infer<typeof musicTrackWithUrl>
 
 export const musicWave = z.object({
   id: z.string().describe('Wave ID'),
