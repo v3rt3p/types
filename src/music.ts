@@ -11,6 +11,7 @@ export const musicArtist = z.object({
 export type MusicArtist = z.infer<typeof musicArtist>
 
 export const musicAlbum = z.object({
+  artists: z.array(musicArtist).describe('Album artists'),
   id: z.string().describe('Album ID'),
   imageUrl: z.string().optional().describe('Album image'),
   name: z.string().describe('Album name'),
@@ -239,12 +240,16 @@ export const musicServiceSearchRequest = z.object({
 export type MusicServiceSearchRequest =
   z.infer<typeof musicServiceSearchRequest>
 
+const withSearchPosition = <T>(t: z.ZodType<T>) => z.intersection(t, z.object({
+  searchPosition: z.number().describe('Position in search results')
+}))
+
 export const musicServiceSearchResponse = z.object({
-  albums: z.array(musicAlbum).optional().describe('Albums'),
-  artists: z.array(musicArtist).optional().describe('Artists'),
-  playlists: z.array(musicPlaylist).optional().describe('Playlists'),
-  tracks: z.array(musicTrack).optional().describe('Tracks'),
-  waves: z.array(musicWave).optional().describe('Waves')
+  albums: z.array(withSearchPosition(musicAlbum)).optional().describe('Albums'),
+  artists: z.array(withSearchPosition(musicArtist)).optional().describe('Artists'),
+  playlists: z.array(withSearchPosition(musicPlaylist)).optional().describe('Playlists'),
+  tracks: z.array(withSearchPosition(musicTrack)).optional().describe('Tracks'),
+  waves: z.array(withSearchPosition(musicWave)).optional().describe('Waves')
 })
 
 export type MusicServiceSearchResponse =
