@@ -48,7 +48,7 @@ export type MusicWave = z.infer<typeof musicWave>
 export const musicPlaylist = z.object({
   id: z.string().describe('Playlist ID'),
   imageUrl: z.string().optional().describe('Playlist image'),
-  name: z.string().optional().describe('Playlist name')
+  name: z.string().describe('Playlist name')
 }).describe('Music playlist')
 
 export type MusicPlaylist = z.infer<typeof musicPlaylist>
